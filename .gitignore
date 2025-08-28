@@ -1,3 +1,5 @@
+#For now used some templates . Started to learn all this stuff . 
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -173,7 +175,7 @@ cython_debug/
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
+.idea/
 
 # Abstra
 # Abstra is an AI-powered process automation framework.
@@ -186,7 +188,7 @@ cython_debug/
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 #  and can be added to the global gitignore or merged into this file. However, if you prefer, 
 #  you could uncomment the following to ignore the entire vscode folder
-# .vscode/
+.vscode/
 
 # Ruff stuff:
 .ruff_cache/
@@ -210,6 +212,12 @@ __marimo__/
 #Media data (own .txt and img/videos)
 /Pomiary
 /pamietniki
+**/opis.txt
+**/*.jpg
+**/*.jpeg
+**/*.png
+**/*.gif
+**/*.webp
 
 #React stuff 
 
@@ -243,7 +251,7 @@ __generated__
 # Icon must end with two \r
 Icon
 
-
+*.tsbuildinfo
 # Thumbnails
 ._*
 
@@ -477,3 +485,21 @@ buck-out/
 .buckd/
 .buckversion
 .fakebuckversion
+
+# Alembic cache
+migrations/__pycache__/
+migrations/versions/__pycache__/
+
+
+pgdata/
+*.sql
+*.dump
+*.backup
+
+logs/
+*.log
+
+# Docker
+*.pid
+*.sock
+.docker/
