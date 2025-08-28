@@ -1,0 +1,130 @@
+
+/* 1) Kontener siatki: elastyczny układ kafelków */
+.tiles-grid {
+  display: grid;
+  /* "auto-fit + minmax" sprawia, że kafelki same się zawijają */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+/* 2) Pojedynczy kafelek jako link (klikany cały obszar) */
+.tile {
+  display: block;                 /* cały kafelek klikalny */
+  position: relative;
+  padding: 20px;
+  border-radius: 16px;            /* ładne zaokrąglenia */
+  text-decoration: none;          /* bez podkreślenia linka */
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.12),     /* lekki fiolet */
+    rgba(16, 185, 129, 0.12)      /* lekka zieleń */
+  );
+  /* delikatny cień */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  /* płynne animacje przy hover/focus */
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  color: inherit;                 /* dziedziczy kolor tekstu */
+}
+
+/* 3) Efekt najechania myszką */
+.tile:hover {
+  transform: translateY(-2px) scale(1.01);      /* subtelne "podniesienie" */
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.18),
+    rgba(16, 185, 129, 0.18)
+  );
+}
+
+/* 4) Dostępność: obrys po focus (np. tabulatorem) */
+.tile:focus {
+  outline: 3px solid rgba(59, 130, 246, 0.8);   /* niebieski obrys */
+  outline-offset: 2px;
+}
+
+/* 5) Ikona w kółku */
+.tile-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;          /* idealne koło */
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 24px;                /* wielkość emotki/ikony */
+  margin-bottom: 12px;
+  /* lekki cień ikony, żeby "lewitowała" */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* 6) Tytuł kafelka */
+.tile-title {
+  display: block;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+/* 7) Krótki opis kafelka */
+.tile-desc {
+  display: block;
+  opacity: 0.8;                   /* przygaszony, ale czytelny */
+  line-height: 1.4;
+}
+
+/* 8) Subtelna strzałka po prawej stronie kafelka */
+.tile::after {
+  content: "→";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  opacity: 0.4;
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+.tile:hover::after {
+  transform: translateY(-50%) translateX(2px);  /* lekkie przesunięcie w prawo */
+  opacity: 0.7;
+}
+
+/* 9) Tryb ciemny automatycznie (jeśli system ma dark mode) */
+@media (prefers-color-scheme: dark) {
+  .tile {
+    background: linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.22),
+      rgba(16, 185, 129, 0.22)
+    );
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  }
+  .tile:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.28),
+      rgba(16, 185, 129, 0.28)
+    );
+    box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+  }
+  .tile-icon {
+    background: rgba(255, 255, 255, 0.16);
+  }
+}
+
+/* 10) Trochę więcej „oddechu” na większych ekranach */
+@media (min-width: 1024px) {
+  .tiles-grid {
+    gap: 20px;
+    padding: 20px;
+  }
+  .tile {
+    padding: 24px;
+  }
+}
+.tiles-grid.a{
+  text-Decoration: none; 
+  color: inherit
+}

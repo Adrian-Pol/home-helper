@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% set body_class = "cele" %}
+{% block title %}Cele{% endblock %}
+{% block content %}
+<h1 style="text-align:center;">Witaj, {{ username }}!</h1>
+<p style="text-align:center;">Tutaj będą twoje cele.</p>
+
+<div class="goals-container">
+    <div class="goals-list">
+        <h3>Moje cele:</h3>
+        {% if cele %}
+            <ul>
+            {% for cel in cele %}
+                <li>{{ cel.goal }} (ważność: {{ cel.priority }})</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Brak celów.</p>
+        {% endif %}
+    </div>
+
+    <div class="goal-form">
+        <h3>Dodaj nowy cel</h3>
+        <form>
+            <input type="text" name="cele" id="cele" placeholder="Dodaj cel" required autocomplete="off">
+            <select name="ocena" id="ocena" required>
+                <option value="" disabled selected>Wybierz wartość</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <button type="button" onclick="dodajCel()">Dodaj Cel</button>
+        
+            <select id="goal_select" required>
+                <option value="" disabled selected>Wybierz cel do usunięcia</option>
+                {% if cele %}
+                    {% for celek in cele %}
+                        <option value="{{celek.id}}">{{celek.goal}}</option>
+                    {% endfor %}
+                {% else %}
+                    <option value="Brak celów">Brak celów</option>
+                {% endif %}
+            </select>
+            <button  type ="button" onclick="usunCel()">Usuń</button>
+        </form>
+    </div>
+</div>
+<p>Liczba celów: {{ cel|length }}</p>
+<ul>
+{% for c in cel %}
+    <li>{{ c.goal }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
+{% block scripts %}
+<script>
+    async function usunCel() {
+        const select = document.getElementById('goal_select');
+        const goalId = select.value;
+        if (!goalId){
+            alert("Wybierz cel do usunięcia.");
+            return;
+        }
+        const response = await fetch(`/cele/${goalId}`,{
+            method: "DELETE",
+        });
+
+        if (response.ok) {
+            alert("Usunięto cel");
+            location.reload();
+        } else {
+            alert("Błąd przy usuwaniu");
+        }
+        
+    }
+    async function dodajCel() {
+        const celetext = document.getElementById("cele").value;
+        const ocenaint = document.getElementById("ocena").value;
+        
+
+        if (!celetext || !ocenaint){
+            alert("Dostarcz wymagane dane");
+            return;
+        }
+        const response = await fetch(`/cele`,{
+            method : "POST",
+            headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+            body: new URLSearchParams({
+                cele: celetext,
+                ocena: ocenaint
+            })
+        });
+        if (response.ok) {
+            alert("Dodano cel");
+            location.reload();
+        } else {
+            alert("Błąd przy dodawaniu");
+        }
+        }
+async function refreshGoals() {
+    const grid = document.getElementById("goalsGrid");
+    grid.innerHTML = "";
+
+    try {
+        const response = await fetch("/api/cele");
+        if (!response.ok) throw new Error("Błąd API");
+
+        const data = await response.json();
+
+        data.forEach(goal => {
+            const tile = document.createElement("div");
+            tile.classList.add("goal-tile");
+
+            const title = document.createElement("div");
+            title.textContent = goal.cele;
+            tile.appendChild(title);
+
+            const rating = document.createElement("div");
+            rating.textContent = "Ocena: " + goal.ocena;
+            tile.appendChild(rating);
+
+            grid.appendChild(tile);
+        });
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// Odśwież kafelki przy starcie strony
+window.addEventListener("DOMContentLoaded", refreshGoals);        
+</script>
+{% endblock %}

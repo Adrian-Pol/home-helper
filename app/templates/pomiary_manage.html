@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/test.css">
+</head>
+<body>
+    <h1 id="tekst">Co sie zmieni</h1>
+    <div class="container">
+        <button id="chngbtn">Kliknij mnie senpai</button>
+        <input type="text" id="cosik" placeholder="Cosik"/>
+    </div>
+    <div class="toggle-container">
+        <div class="stars"></div>
+        <div class="toggle-button"></div>
+    </div>
+    <script>
+        
+        let zmiana = document.getElementById("tekst");
+        let button = document.getElementById("chngbtn");
+        const cosike = document.getElementById("cosik");
+      
+        
+        const toggleContainer = document.querySelector('.toggle-container');
+        const starsContainer = document.querySelector('.stars');
+
+        toggleContainer.addEventListener('click', () => {
+        toggleContainer.classList.toggle('off');
+
+        if(toggleContainer.classList.contains('off')) {
+        
+            starsContainer.innerHTML = ''; 
+            for(let i = 0; i < 30; i++) { 
+                const star = document.createElement('div');
+                star.style.width = star.style.height = Math.random() * 2 + 1 + 'px';
+                star.style.background = 'white';
+                star.style.borderRadius = '50%';
+                star.style.position = 'absolute';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.opacity = Math.random();
+                star.style.transition = 'opacity 1s';
+                starsContainer.appendChild(star);
+
+            
+            setInterval(() => {
+                star.style.opacity = Math.random();
+            }, 500 + Math.random() * 1000);
+        }
+    } else {
+        
+        starsContainer.innerHTML = '';
+    }
+});
+    
+    </script>
+</body>
+</html>

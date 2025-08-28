@@ -1,0 +1,49 @@
+body {
+    background-color: darksalmon;
+}
+
+button {
+    border-radius: 500px;
+}
+.container{
+    padding:10%
+}
+.toggle-container {
+    width: 120px;
+    height: 60px;
+    border-radius: 30px;
+    background: linear-gradient(to right, #87ceeb, #f0e68c);
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background 0.5s;
+}
+
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.toggle-button {
+    width: 50px;
+    height: 50px;
+    background: yellow;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    transition: left 0.5s, background 0.5s, box-shadow 0.5s;
+}
+
+
+.toggle-container.off {
+    background: linear-gradient(to right, #0b0c38, #1a1a40);
+}
+
+.toggle-container.off .toggle-button {
+    left: 65px;
+    background: silver;
+    box-shadow: 0 0 15px 3px white;
+}

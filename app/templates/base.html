@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Moja aplikacja{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="{{ body_class|default('') }}">
+
+    {% if request.session.get('user') %}
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="/home/{{ request.session.get('user') }}">🏠 Strona główna</a>
+            <a href="/pamietnik">📓Pamiętnik</a>
+            <a href="/cele">🎯Cele</a>
+            <a href="/pomiary">📏Pomiary</a>
+        </div>
+        <div class="nav-right">
+            <span>Zalogowany jako <strong>{{ request.session.get('user') }}</strong></span>
+            <a href="/logout">🚪 Wyloguj się</a>
+        </div>
+    </nav>
+    {% endif %}
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+
+{% block scripts %}
+
+{% endblock %}
+</body>
+</html>

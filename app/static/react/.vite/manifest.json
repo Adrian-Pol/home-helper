@@ -1,0 +1,15 @@
+{
+  "src/assets/react.svg": {
+    "file": "assets/react-CHdo91hT.svg",
+    "src": "src/assets/react.svg"
+  },
+  "src/main.jsx": {
+    "file": "assets/main-BvrAwJg3.js",
+    "name": "main",
+    "src": "src/main.jsx",
+    "isEntry": true,
+    "css": [
+      "assets/main-DpYia1XB.css"
+    ]
+  }
+}

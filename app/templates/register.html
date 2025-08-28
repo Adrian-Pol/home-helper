@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Rejestracja{% endblock %}
+
+{% block content %}
+    <h1>Rejestracja</h1>
+    <form method="post" action="/register">
+        <input type="text" name="username" placeholder="Nazwa użytkownika" required>
+        <input type="password" name="password" placeholder="Hasło" required>
+        <button type="submit">Zarejestruj się</button>
+    </form>
+    <p style="text-align:center; margin-top: 10px;">
+        Masz już konto? <a href="/login">Zaloguj się</a>
+    </p>
+{% endblock %}

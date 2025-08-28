@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% set body_class = "pamietnik" %}
+{% block title %}Pomiary{% endblock %}
+{% block content %}
+<div class="main-container">
+  <div class="sidebar-right">
+    
+    <button id="scanFormButton">🔄 Skanuj pamiętnik</button>
+
+    <form method="get" action="/pomiary" class="form-search">
+    </form>
+  </div>
+
+  
+  <div id="titlesGrid" class="tiles-grid">
+    {% for entry in entries %}
+      {% set images = images_by_entry_id.get(entry.id, []) %}
+      <div class="tile">
+          {% if images %}
+            <img src="/{{ images[0] }}" alt="Kliknij aby otworzyć dzień">
+          {% else %}
+            <div class="no-image">Brak zdjęcia</div>
+          {% endif %}
+        </a>
+        <div class="tile-caption">{{ entry.folder_name or 'BRAK' }}</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+    {% for dzien in dni %}
+    <a href="/pomiary/dzien/{{ dzien }}" 
+       style="text-decoration: none; color: inherit;">
+        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; 
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; 
+                    transition: transform 0.2s ease;">
+            <h3>{{ dzien }}</h3>
+            <p>Kliknij, aby zobaczyć pomiary</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>

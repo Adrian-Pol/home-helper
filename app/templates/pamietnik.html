@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% set body_class = "pamietnik" %}
+{% block title %}Pamiętnik{% endblock %}
+
+{% block content %}
+<div class="main-container">
+  <div class="sidebar-right">
+    
+    <button id="scanFormButton">🔄 Skanuj pamiętnik</button>
+
+    <form method="get" action="/pamietnik" class="form-search">
+      <input type="text" name="query" placeholder="Szukaj po dacie lub opisie..." value="{{ query }}" required autocomplete="off">
+      <button type="submit">🔍 Szukaj</button>
+    </form>
+
+  </div>
+
+
+</div>
+<div 
+      id="delete-day"
+      data-del-dairy-day = "{{ url_for('day_delete',entry_id=0) }}">
+</div>
+{% endblock %}
+
+{% block scripts %}
+{# Wczytaj wszystkie pliki CSS z manifestu #}
+{% for css in react_css %}
+  <link rel="stylesheet" href="{{ url_for('static', path='react/' + css) }}">
+{% endfor %}
+
+{# Wczytaj plik JS React #}
+<script type="module" src="{{ url_for('static', path='react/' + react_js) }}"></script>
+
+
+{% endblock %}
