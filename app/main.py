@@ -39,7 +39,7 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 app.mount("/Pomiary", StaticFiles(directory="Pomiary"), name="pomiary")
 app.mount(
     "/static/react",
-    StaticFiles(directory="frontend/dist/assets"),  # assets z buildu
+    StaticFiles(directory=os.path.join(BASE_DIR,"static/react")),  # assets z buildu
     name="react"
 )
 

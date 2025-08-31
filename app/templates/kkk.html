@@ -11,38 +11,7 @@
     
 </div>
 
-    <div class="goal-form">
-        <h3>Dodaj nowy cel</h3>
-        <form>
-            <input type="text" name="cele" id="cele" placeholder="Dodaj cel" required autocomplete="off">
-            <select name="ocena" id="ocena" required>
-                <option value="" disabled selected>Wybierz wartość</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-            <button type="button" onclick="dodajCel()">Dodaj Cel</button>
-        
-            <select id="goal_select" required>
-                <option value="" disabled selected>Wybierz cel do usunięcia</option>
-                {% if cele %}
-                    {% for celek in cele %}
-                        <option value="{{celek.id}}">{{celek.goal}}</option>
-                    {% endfor %}
-                {% else %}
-                    <option value="Brak celów">Brak celów</option>
-                {% endif %}
-            </select>
-            <button  type ="button" onclick="usunCel()">Usuń</button>
-        </form>
-    </div>
-</div>
-<p>Liczba celów: {{ cel|length }}</p>
-<ul>
-{% for c in cel %}
-    <li>{{ c.goal }}</li>
-{% endfor %}
-</ul>
+    
 {% endblock %}
 {% block scripts %}
 {% for css in react_css %}
@@ -51,7 +20,7 @@
 
 {# Wczytaj plik JS React #}
 <script type="module" src="{{ url_for('static', path='react/' + react_js) }}"></script>
-<script>
+<!--<script>
     async function usunCel() {
         const select = document.getElementById('goal_select');
         const goalId = select.value;
@@ -128,5 +97,5 @@ async function refreshGoals() {
 
 // Odśwież kafelki przy starcie strony
 window.addEventListener("DOMContentLoaded", refreshGoals);        
-</script>
+</script>-->
 {% endblock %}

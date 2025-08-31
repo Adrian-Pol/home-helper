@@ -4,7 +4,8 @@ import App from './pages/App.jsx';
 import Apptest from './pages/Apptest.jsx';
 import Deleteday from './pages/Deleteday.jsx';
 import GoalReact from './pages/GoalReact.jsx';
-
+import AppRoutes from "./AppRoutes"
+import "./index.css";
 
 // Helper to safely mount a React tree into an optional container
 function mount(id, render) {
@@ -41,3 +42,9 @@ mount('goal-view', (el) =>{
     const goalviewUrl = el.dataset.goalviewUrl;
     return <GoalReact goalviewUrl={goalviewUrl} />;
 });
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <AppRoutes />
+  </StrictMode>,
+)

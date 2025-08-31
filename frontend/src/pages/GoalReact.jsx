@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import GoalReactC from '../components/GoalReactC.jsx';
+import GoalDelete from '../components/GoalDelete.jsx';
 
 export default function GoalReact({}) {
     const endpoints = useMemo(() => ({
@@ -11,6 +12,7 @@ export default function GoalReact({}) {
     const [entries, setEntries] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [deleteMode , setDeleteMode] = useState(false);
 
     useEffect(() => {
         const ac = new AbortController()
@@ -38,9 +40,33 @@ export default function GoalReact({}) {
         return () => ac.abort();
     }, [endpoints.list]);
 
+   const deleteGoal = async (goalId) => {
+        if (!goalId) {
+            alert("Wybierz cel do usunięcia.");
+            return;
+        }
+        try {
+            const response = await fetch(endpoints.del(goalId), {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                alert("Usunięto cel");
+                setEntries(entries.filter(entry => entry.id !== goalId)); 
+            } else {
+                alert("Błąd przy usuwaniu");
+            }
+        } catch (error) {
+            alert("Wystąpił błąd: " + error.message);
+        
+        }
+    };
+    
+
     return(
         <div>
         <GoalReactC entries = {entries}/>
+        <GoalDelete entries={entries} deleteGoal={deleteGoal}/>
         </div>
     )
 }

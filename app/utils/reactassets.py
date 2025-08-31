@@ -8,5 +8,5 @@ def get_react_assets():
     manifest_path = os.path.join("app", "static", "react",".vite", "manifest.json")
     with open(manifest_path, "r", encoding="utf-8") as f:
         manifest = json.load(f)
-    entry = manifest["src/main.jsx"]
+    entry = manifest["index.html"]
     return entry["file"], entry.get("css", [])

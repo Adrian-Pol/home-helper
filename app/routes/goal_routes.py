@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, Form, status, Depends,APIRouter
-from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse,FileResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
@@ -15,17 +15,15 @@ from typing import List
 
 
 router = APIRouter()
-@router.get("/celek")
-async def widok_cele(request: Request,db: Session = Depends(get_db),currnet_user: User = Depends(get_current_user)):
-    goal_query = db.query(GoalEntry).filter(GoalEntry.user_id == currnet_user.id).order_by(GoalEntry.priority.asc()).all()
-    react_js, react_css = get_react_assets()
-    return templates.TemplateResponse("cele.html", {
-        "request": request,
-        "cele" : goal_query,
-        "react_js": react_js,
-        'react_css': react_css,
-        })
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+@router.get("/cele", response_class=HTMLResponse)
+async def widok_cele(current_user: User = Depends(get_current_user)):
+    if not current_user:
+        return RedirectResponse("/login")
+
+    # index.html wygenerowany przez React build
+    return FileResponse(os.path.join(BASE_DIR, "../static/react/index.html"))
 @router.get("/api/cele",response_model=List[GoalEntrySchema])
 async def api_get_goals(
     db: Session = Depends(get_db),
@@ -64,10 +62,10 @@ async def goal_delete(
     request: Request,
     entry_id: int,
     db: Session = Depends(get_db),
-    currenet_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user)
 ):
     try:
-        remove_goal(entry_id,currenet_user.username,db)
+        remove_goal(entry_id,current_user.username,db)
         return JSONResponse(content={"message": "Cel usunięty"}, status_code=200)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
