@@ -3,5 +3,10 @@
     flex-direction: column;
     min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(255, 255, 255);
+    margin:0px;
+    padding:0px;
+}
+.goals{
     background-color: gray;
 }

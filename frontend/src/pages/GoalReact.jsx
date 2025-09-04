@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import GoalReactC from '../components/GoalReactC.jsx';
 import GoalDelete from '../components/GoalDelete.jsx';
+import GoalAdd from '../components/GoalAdd.jsx';
+import styles from '../styles/GoalReact.module.css';
+
 
 export default function GoalReact({}) {
     const endpoints = useMemo(() => ({
@@ -28,6 +31,7 @@ export default function GoalReact({}) {
                 });
                 if (!res.ok) throw new Error(await res.text() || "Błąd pobierania wpisów");
                 const data = await res.json();
+                console.log("Dane:", data);
                 setEntries(Array.isArray(data) ? data : []);
             } catch (err) {
                 if (err.name !== "AbortError") setError(err.message || "Nieznany błąd");
@@ -39,6 +43,11 @@ export default function GoalReact({}) {
         load();
         return () => ac.abort();
     }, [endpoints.list]);
+
+    const reloadGoals = async () => {
+        const res = await fetch(endpoints.list,{credentials:"same-origin"});
+        setEntries(await res.json());
+    }
 
    const deleteGoal = async (goalId) => {
         if (!goalId) {
@@ -64,9 +73,14 @@ export default function GoalReact({}) {
     
 
     return(
-        <div>
-        <GoalReactC entries = {entries}/>
-        <GoalDelete entries={entries} deleteGoal={deleteGoal}/>
-        </div>
+        <>
+            <div className={styles.list}>
+                <GoalReactC entries={entries}/>
+            </div>
+            <div className={styles.actions}>
+                <GoalAdd addEndpoint={endpoints.add} onAdded={reloadGoals} />
+                <GoalDelete entries={entries} deleteGoal={deleteGoal}/>
+            </div>
+        </>
     )
 }

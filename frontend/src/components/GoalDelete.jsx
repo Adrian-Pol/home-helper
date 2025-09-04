@@ -1,12 +1,16 @@
-import React from 'react';
+
 import styles from '../styles/GoalReact.module.css';
+import React, { useState } from 'react';
 
 function GoalDelete({ entries, deleteGoal }) {
+    const [selectedId, setselectedId] = useState("");
     return (
         <div>
             
             {entries.length > 0 && (
-                <select id="goal_select">
+                <select 
+                    value={selectedId}
+                    onChange={(e) => setselectedId(e.target.value)}>
                     <option value="" disabled selected>Wybierz cel do usunięcia</option>
                     {entries.map((entry) => (
                         <option key={entry.id} value={entry.id}>
@@ -17,10 +21,9 @@ function GoalDelete({ entries, deleteGoal }) {
             
             )}
             
-            <button className={styles.button} onClick={() => {
-                const select = document.getElementById('goal_select');
-                deleteGoal(select.value); // Wywołanie funkcji usuwania
-            }}>
+            <button className={styles.button} onClick={() => 
+                deleteGoal(selectedId)
+            } disabled={!selectedId}>
                 Usuń cel
             </button>
         </div>

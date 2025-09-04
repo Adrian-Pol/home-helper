@@ -9,9 +9,7 @@ const Layout = ({ extraClass =""}) => {
         
             <div className={`${styles.layoutBody} ${extraClass}`}>      
                 
-                <Navbar>
-                    <p>No tak</p>
-                </Navbar>
+                <Navbar/>
                 <main style={{padding: "20px"}}>
                     <Outlet /> {}
                 </main>

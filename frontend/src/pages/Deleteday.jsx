@@ -87,7 +87,7 @@ export default function Deleteday({ apiBase }) {
     }
   }
 
-  // 🔥 Tu zwracamy UI
+  
   return (
     <div>
       {/* Pole wyszukiawnia */}

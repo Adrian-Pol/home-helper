@@ -22,7 +22,7 @@ async def widok_cele(current_user: User = Depends(get_current_user)):
     if not current_user:
         return RedirectResponse("/login")
 
-    # index.html wygenerowany przez React build
+    
     return FileResponse(os.path.join(BASE_DIR, "../static/react/index.html"))
 @router.get("/api/cele",response_model=List[GoalEntrySchema])
 async def api_get_goals(
@@ -32,10 +32,10 @@ async def api_get_goals(
     if not current_user:
         return JSONResponse({"error": "Nie jesteś zalogowany"}, status_code=401)
 
-    # Pobieramy wszystkie cele użytkownika
+    
     goals = db.query(GoalEntry).filter(GoalEntry.user_id == current_user.id).order_by(GoalEntry.priority.asc()).all()
     
-    # Tworzymy listę do JSON
+    
     
 
     return goals
